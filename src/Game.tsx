@@ -10,7 +10,7 @@ const TOTAL_QUESTIONS = 2;
 const App = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState(-1);
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
@@ -47,7 +47,6 @@ const App = (): JSX.Element => {
   const nextQuestion = (): void => {
     const nextQuestion = number + 1;
     if (nextQuestion === TOTAL_QUESTIONS) {
-      setGameOver(true);
     } else {
       setNumber(nextQuestion);
     }
@@ -57,10 +56,16 @@ const App = (): JSX.Element => {
     if (loading) {
       return <p>Loading questions...</p>;
     } else {
-      if (gameOver || userAnswers.length === TOTAL_QUESTIONS) {
+      if (gameOver) {
       } else {
         let nextButton = null;
-        if (userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1) {
+        if (userAnswers.length === number + 1 && number === TOTAL_QUESTIONS - 1) {
+          nextButton = (
+            <Button className="next" onClick={startTrivia}>
+              Start new game
+            </Button>
+          );
+        } else if (userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1) {
           nextButton = (
             <Button className="next" onClick={nextQuestion}>
               Next Question
@@ -88,7 +93,7 @@ const App = (): JSX.Element => {
   return (
     <Container className="game-container" fluid>
       <Navheader score={score} gameOver={gameOver} />
-      {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+      {number === -1 ? (
         <div className="start-page">
           <Button className="start" onClick={startTrivia}>
             Start

@@ -7,7 +7,7 @@ const NavHeader = (props: { score: number; gameOver: boolean }) => {
     <>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="#home">
-          <h1>Trivialities</h1>
+          <h1>TRIVIALITIES</h1>
         </Navbar.Brand>
         <Badge variant="secondary">Score: {score}</Badge>
       </Navbar>
