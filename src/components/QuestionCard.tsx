@@ -11,6 +11,26 @@ type Props = {
   totalQuestions: number;
 };
 
+const evaluateClass = (userAnswer: AnswerObject | undefined, answer: string): string => {
+  if (userAnswer === undefined) {
+    return "";
+  }
+
+  if (userAnswer.correct) {
+    if (userAnswer.correctAnswer === answer) {
+      return "correct highlight";
+    }
+  } else {
+    if (answer === userAnswer.correctAnswer) {
+      return "correct";
+    } else if (answer === userAnswer.answer) {
+      return "incorrect highlight";
+    }
+  }
+
+  return "";
+};
+
 const QuestionCard: React.FC<Props> = ({
   question,
   answers,
@@ -18,20 +38,26 @@ const QuestionCard: React.FC<Props> = ({
   userAnswer,
   questionNumber,
   totalQuestions,
-}) => (
-  <div className="question-card">
-    <h4 className="number">{`Question: ${questionNumber}/${totalQuestions}`}</h4>
-    <h2 className="number" dangerouslySetInnerHTML={{ __html: question }} />
-    <div>
-      {answers.map((answer, i) => (
-        <div key={i}>
-          <Button className="options" disabled={!!userAnswer} value={answer} onClick={callback}>
-            <span dangerouslySetInnerHTML={{ __html: answer }} />
-          </Button>
-        </div>
-      ))}
+}) => {
+  return (
+    <div className="question-card">
+      <h4 className="number">{`Question: ${questionNumber}/${totalQuestions}`}</h4>
+      <h2 className="number" dangerouslySetInnerHTML={{ __html: question }} />
+      <div>
+        {answers.map((answer, i) => (
+          <div key={i}>
+            <Button
+              className={`options ${evaluateClass(userAnswer, answer)}`}
+              disabled={!!userAnswer}
+              value={answer}
+              onClick={callback}>
+              <span dangerouslySetInnerHTML={{ __html: answer }} />
+            </Button>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default QuestionCard;

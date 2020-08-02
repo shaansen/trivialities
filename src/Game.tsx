@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import QuestionCard from "./components/QuestionCard";
 import Navheader from "./Navheader";
+import ImmediateResult from "./ImmediateResult";
 import { Container, Button, Badge } from "react-bootstrap";
 import { fetchQuizQuestions, Difficulty, QuestionState, AnswerObject } from "./API";
 
@@ -76,14 +77,13 @@ const App = (): JSX.Element => {
               userAnswer={userAnswers ? userAnswers[number] : undefined}
               callback={checkAnswer}
             />
+            <ImmediateResult userAnswer={userAnswers[number]} />
             {nextButton}
           </>
         );
       }
     }
   };
-
-  console.log(gameOver, userAnswers);
 
   return (
     <Container className="game-container" fluid>

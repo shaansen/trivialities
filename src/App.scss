@@ -6,18 +6,6 @@ body {
   padding: 0px;
 }
 
-button.options {
-  width: 100%;
-  margin: 5px 0 5px 0;
-  background-color: silver;
-  border-color: white;
-}
-
-button.options:disabled {
-  background-color: silver;
-  border-color: black;
-}
-
 .start-page {
   margin: 25px;
   flex: 1;
@@ -41,4 +29,36 @@ div.question-card {
 
 button.next {
   margin: 25px;
+}
+
+button.options {
+  width: 100%;
+  margin: 5px 0 5px 0;
+  background-color: silver;
+  border-color: white;
+}
+
+button.options:disabled {
+  background-color: silver;
+  border-color: white;
+}
+
+button.options.correct {
+  background-color: green;
+  border-color: green;
+}
+
+button.options.incorrect {
+  background-color: red;
+  border-color: red;
+}
+
+button.options.highlight {
+  border-color: black;
+  border-width: 5px;
+}
+
+.immediate-result {
+  display: flex;
+  justify-content: center;
 }
