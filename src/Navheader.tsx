@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Navbar, Badge, Form } from "react-bootstrap";
+import { Navbar, Badge } from "react-bootstrap";
 
-const NavHeader = (props: { score: number; gameOver: boolean }) => {
-  const { gameOver, score } = props;
+const NavHeader = (props: { score: number }) => {
+  const { score } = props;
   return (
     <>
       <Navbar bg="light" expand="lg">

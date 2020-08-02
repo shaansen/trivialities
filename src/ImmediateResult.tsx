@@ -5,7 +5,7 @@ const ImmediateResult = (props: { userAnswer: AnswerObject | undefined }) => {
   const { userAnswer } = props;
   let text = null;
   if (!!userAnswer) {
-    const { correct, correctAnswer, answer } = userAnswer;
+    const { correct } = userAnswer;
     if (correct) {
       text = "CORRECT";
     } else {

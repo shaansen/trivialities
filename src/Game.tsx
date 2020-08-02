@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import QuestionCard from "./components/QuestionCard";
 import Navheader from "./Navheader";
+import StartPage from "./StartPage";
 import ImmediateResult from "./ImmediateResult";
-import { Container, Button, Badge } from "react-bootstrap";
-import { fetchQuizQuestions, Difficulty, QuestionState, AnswerObject } from "./API";
-
-const TOTAL_QUESTIONS = 2;
+import { Container, Button } from "react-bootstrap";
+import { fetchQuizQuestions, QuestionState, AnswerObject } from "./API";
 
 const App = (): JSX.Element => {
+  const [TOTAL_QUESTIONS, setTotalQuestions] = useState(5);
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
   const [number, setNumber] = useState(-1);
@@ -15,11 +15,21 @@ const App = (): JSX.Element => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  const startTrivia = async (): Promise<void> => {
+  const resetGame = () => {
+    setNumber(-1);
+  };
+
+  const startTrivia = (options: {
+    number: number;
+    category: string;
+    difficulty: string;
+    type: string;
+  }) => async (): Promise<void> => {
     setLoading(true);
     setGameOver(false);
 
-    const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
+    const newQuestions = await fetchQuizQuestions(options);
+    setTotalQuestions(options.number);
     setQuestions(newQuestions);
     setScore(0);
     setUserAnswers([]);
@@ -61,7 +71,7 @@ const App = (): JSX.Element => {
         let nextButton = null;
         if (userAnswers.length === number + 1 && number === TOTAL_QUESTIONS - 1) {
           nextButton = (
-            <Button className="next" onClick={startTrivia}>
+            <Button className="next" onClick={resetGame}>
               Start new game
             </Button>
           );
@@ -92,14 +102,8 @@ const App = (): JSX.Element => {
 
   return (
     <Container className="game-container" fluid>
-      <Navheader score={score} gameOver={gameOver} />
-      {number === -1 ? (
-        <div className="start-page">
-          <Button className="start" onClick={startTrivia}>
-            Start
-          </Button>
-        </div>
-      ) : null}
+      <Navheader score={score} />
+      {number === -1 ? <StartPage startTrivia={startTrivia} /> : null}
       {renderQuestions()}
     </Container>
   );
