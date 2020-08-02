@@ -1,15 +1,18 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { OptionsType } from "./API";
 
-const StartPage = (props: {
-  startTrivia: (options: {
-    number: number;
-    category: string;
-    difficulty: string;
-    type: string;
-  }) => () => Promise<void>;
-}) => {
+const constructParams = (options: OptionsType) => {
+  return Object.keys(options)
+    .map((key) => {
+      return encodeURIComponent(key) + "=" + encodeURIComponent(options[key]);
+    })
+    .join("&");
+};
+
+const StartPage = () => {
   const [number, setNumber] = useState(5);
   const [category, setCategory] = useState("any");
   const [difficulty, setDifficulty] = useState("any");
@@ -83,9 +86,9 @@ const StartPage = (props: {
             <option value="boolean">True / False</option>
           </Form.Control>
         </Form.Group>
-        <Button className="start" onClick={props.startTrivia(options)}>
-          Start
-        </Button>
+        <Link to={`/game?${constructParams(options)}`}>
+          <Button className="start">Start</Button>
+        </Link>
       </Form>
     </div>
   );

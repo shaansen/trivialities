@@ -1,8 +1,9 @@
 import React from "react";
 import { AnswerObject } from "../API";
-import { Button } from "react-bootstrap";
+import { Button, Badge, Container } from "react-bootstrap";
 
 type Props = {
+  score: number;
   question: string;
   answers: string[];
   callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -32,6 +33,7 @@ const evaluateClass = (userAnswer: AnswerObject | undefined, answer: string): st
 };
 
 const QuestionCard: React.FC<Props> = ({
+  score,
   question,
   answers,
   callback,
@@ -41,7 +43,12 @@ const QuestionCard: React.FC<Props> = ({
 }) => {
   return (
     <div className="question-card">
-      <h4 className="number">{`Question: ${questionNumber}/${totalQuestions}`}</h4>
+      <Container fluid className="question-detail-header">
+        <h4 className="number">{`Question: ${questionNumber}/${totalQuestions}`}</h4>
+        <Badge className="score-badge" variant="secondary">
+          Score: {score}
+        </Badge>
+      </Container>
       <h2 className="number" dangerouslySetInnerHTML={{ __html: question }} />
       <div>
         {answers.map((answer, i) => (

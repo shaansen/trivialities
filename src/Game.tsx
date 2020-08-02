@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import QuestionCard from "./components/QuestionCard";
-import Navheader from "./Navheader";
-import StartPage from "./StartPage";
-import ImmediateResult from "./ImmediateResult";
 import { Container, Button } from "react-bootstrap";
-import { fetchQuizQuestions, QuestionState, AnswerObject } from "./API";
+import { fetchQuizQuestions, QuestionState, AnswerObject, OptionsType } from "./API";
+import { Link } from "react-router-dom";
 
 const App = (): JSX.Element => {
   const [TOTAL_QUESTIONS, setTotalQuestions] = useState(5);
@@ -15,27 +13,30 @@ const App = (): JSX.Element => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  const resetGame = () => {
-    setNumber(-1);
-  };
+  useEffect(() => {
+    // Create an scoped async function in the hook
+    async function anyNameFunction() {
+      let params = new URLSearchParams(document.location.search.substring(1));
+      let options = ({
+        number: params?.get("number") || 5,
+        type: params?.get("type") || "any",
+        difficulty: params?.get("difficulty") || "any",
+        category: params?.get("category") || "any",
+      } as unknown) as OptionsType;
+      setLoading(true);
+      setGameOver(false);
 
-  const startTrivia = (options: {
-    number: number;
-    category: string;
-    difficulty: string;
-    type: string;
-  }) => async (): Promise<void> => {
-    setLoading(true);
-    setGameOver(false);
-
-    const newQuestions = await fetchQuizQuestions(options);
-    setTotalQuestions(options.number);
-    setQuestions(newQuestions);
-    setScore(0);
-    setUserAnswers([]);
-    setNumber(0);
-    setLoading(false);
-  };
+      const newQuestions = await fetchQuizQuestions(options);
+      setTotalQuestions(Number(options.number));
+      setQuestions(newQuestions);
+      setScore(0);
+      setUserAnswers([]);
+      setNumber(0);
+      setLoading(false);
+    }
+    // Execute the created function directly
+    anyNameFunction();
+  }, []);
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>): void => {
     if (!gameOver) {
@@ -71,13 +72,13 @@ const App = (): JSX.Element => {
         let nextButton = null;
         if (userAnswers.length === number + 1 && number === TOTAL_QUESTIONS - 1) {
           nextButton = (
-            <Button className="next" onClick={resetGame}>
-              Start new game
+            <Button className="next">
+              <Link to="/">Start new game</Link>
             </Button>
           );
         } else if (userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1) {
           nextButton = (
-            <Button className="next" onClick={nextQuestion}>
+            <Button size="lg" className="next" onClick={nextQuestion}>
               Next Question
             </Button>
           );
@@ -85,6 +86,7 @@ const App = (): JSX.Element => {
         return (
           <>
             <QuestionCard
+              score={score}
               questionNumber={number + 1}
               totalQuestions={TOTAL_QUESTIONS}
               question={questions[number].question}
@@ -92,8 +94,12 @@ const App = (): JSX.Element => {
               userAnswer={userAnswers ? userAnswers[number] : undefined}
               callback={checkAnswer}
             />
-            <ImmediateResult userAnswer={userAnswers[number]} />
-            {nextButton}
+            <div className="footer">
+              {userAnswers[number] && (
+                <h1>{userAnswers[number].correct ? "CORRECT" : "INCORRECT"}</h1>
+              )}
+              {nextButton}
+            </div>
           </>
         );
       }
@@ -102,8 +108,6 @@ const App = (): JSX.Element => {
 
   return (
     <Container className="game-container" fluid>
-      <Navheader score={score} />
-      {number === -1 ? <StartPage startTrivia={startTrivia} /> : null}
       {renderQuestions()}
     </Container>
   );
