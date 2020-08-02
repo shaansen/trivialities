@@ -44,7 +44,7 @@ const QuestionCard: React.FC<Props> = ({
   return (
     <div className="question-card">
       <Container fluid className="question-detail-header">
-        <h4 className="number">{`Question: ${questionNumber}/${totalQuestions}`}</h4>
+        <h5 className="number">{`Question: ${questionNumber}/${totalQuestions}`}</h5>
         <Badge className="score-badge" variant="secondary">
           Score: {score}
         </Badge>

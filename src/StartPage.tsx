@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { OptionsType } from "./API";
 
@@ -20,7 +20,7 @@ const StartPage = () => {
   const options = { number, category, difficulty, type };
 
   return (
-    <div className="start-page">
+    <Container fluid className="start-page">
       <Form>
         <Form.Group>
           <Form.Label>Number of questions</Form.Label>
@@ -90,7 +90,7 @@ const StartPage = () => {
           <Button className="start">Start</Button>
         </Link>
       </Form>
-    </div>
+    </Container>
   );
 };
 

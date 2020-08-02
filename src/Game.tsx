@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuestionCard from "./components/QuestionCard";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Spinner } from "react-bootstrap";
 import { fetchQuizQuestions, QuestionState, AnswerObject, OptionsType } from "./API";
 import { Link } from "react-router-dom";
 
@@ -65,14 +65,19 @@ const App = (): JSX.Element => {
 
   const renderQuestions = () => {
     if (loading) {
-      return <p>Loading questions...</p>;
+      return (
+        <>
+          <Spinner animation="grow" />
+          <h1>Loading</h1>
+        </>
+      );
     } else {
       if (gameOver) {
       } else {
         let nextButton = null;
         if (userAnswers.length === number + 1 && number === TOTAL_QUESTIONS - 1) {
           nextButton = (
-            <Button className="next">
+            <Button size="lg" className="next">
               <Link to="/">Start new game</Link>
             </Button>
           );
@@ -96,7 +101,7 @@ const App = (): JSX.Element => {
             />
             <div className="footer">
               {userAnswers[number] && (
-                <h1>{userAnswers[number].correct ? "CORRECT" : "INCORRECT"}</h1>
+                <h3>{userAnswers[number].correct ? "CORRECT" : "INCORRECT"}</h3>
               )}
               {nextButton}
             </div>

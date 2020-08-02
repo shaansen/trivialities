@@ -6,28 +6,42 @@ body {
   padding: 0px;
 }
 
-.start-page {
-  margin: 25px;
-  flex: 1;
+div#root {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+}
+
+nav.navbar {
+  max-height: 82px;
+  flex: 1;
+}
+
+.start-page {
+  flex: 1;
+  display: flex;
   min-height: 50vh;
   align-content: center;
+  align-items: center;
   justify-content: center;
 }
 
 .game-container {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 div.question-card {
   flex: 1;
-  margin: 25px;
+  margin: 15px;
 }
 
 button.next {
-  margin: 25px;
+  margin: 0 15px 15px 15px;
   a,
   a:hover {
     color: white;
@@ -85,7 +99,7 @@ div.footer {
   left: 0;
   right: 0;
 
-  h1 {
+  h3 {
     text-align: center;
   }
 }
