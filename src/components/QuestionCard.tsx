@@ -1,5 +1,6 @@
 import React from "react";
 import { AnswerObject } from "../API";
+import { Button } from "react-bootstrap";
 
 type Props = {
   question: string;
@@ -18,15 +19,15 @@ const QuestionCard: React.FC<Props> = ({
   questionNumber,
   totalQuestions,
 }) => (
-  <div>
-    <p className="number">{`Question: ${questionNumber}/${totalQuestions}`}</p>
-    <p className="number" dangerouslySetInnerHTML={{ __html: question }} />
+  <div className="question-card">
+    <h4 className="number">{`Question: ${questionNumber}/${totalQuestions}`}</h4>
+    <h2 className="number" dangerouslySetInnerHTML={{ __html: question }} />
     <div>
       {answers.map((answer, i) => (
         <div key={i}>
-          <button disabled={!!userAnswer} value={answer} onClick={callback}>
+          <Button className="options" disabled={!!userAnswer} value={answer} onClick={callback}>
             <span dangerouslySetInnerHTML={{ __html: answer }} />
-          </button>
+          </Button>
         </div>
       ))}
     </div>

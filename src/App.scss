@@ -1,0 +1,44 @@
+body {
+  font-family: "Rowdies", sans-serif;
+}
+
+.container-fluid {
+  padding: 0px;
+}
+
+button.options {
+  width: 100%;
+  margin: 5px 0 5px 0;
+  background-color: silver;
+  border-color: white;
+}
+
+button.options:disabled {
+  background-color: silver;
+  border-color: black;
+}
+
+.start-page {
+  margin: 25px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
+  align-content: center;
+  justify-content: center;
+}
+
+.game-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+div.question-card {
+  flex: 1;
+  margin: 25px;
+}
+
+button.next {
+  margin: 25px;
+}
