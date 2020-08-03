@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button, Form, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { OptionsType } from "./API";
 
 const constructParams = (options: OptionsType) => {

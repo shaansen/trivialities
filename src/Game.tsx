@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import QuestionCard from "./components/QuestionCard";
+import EndGameModal from "./components/EndGameModal";
 import { Container, Button, Spinner } from "react-bootstrap";
 import { fetchQuizQuestions, QuestionState, AnswerObject, OptionsType } from "./API";
-import { Link } from "react-router-dom";
 
 const App = (): JSX.Element => {
   const [TOTAL_QUESTIONS, setTotalQuestions] = useState(5);
@@ -75,11 +75,7 @@ const App = (): JSX.Element => {
     } else {
       let nextButton = null;
       if (userAnswers.length === number + 1 && number === TOTAL_QUESTIONS - 1) {
-        nextButton = (
-          <Button size="lg" className="next">
-            <Link to="/">Start new game</Link>
-          </Button>
-        );
+        nextButton = <EndGameModal score={score} totalQuestions={TOTAL_QUESTIONS} />;
       } else if (userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1) {
         nextButton = (
           <Button size="lg" className="next" onClick={nextQuestion}>
