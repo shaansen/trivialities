@@ -86,10 +86,10 @@ const StartPage = () => {
             <option value="boolean">True / False</option>
           </Form.Control>
         </Form.Group>
-        <Link to={`/game?${constructParams(options)}`}>
-          <Button className="start">Start</Button>
-        </Link>
       </Form>
+      <Button href={`/game?${constructParams(options)}`} size="lg" className="start">
+        Start
+      </Button>
     </Container>
   );
 };

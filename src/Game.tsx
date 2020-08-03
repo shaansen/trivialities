@@ -63,57 +63,55 @@ const App = (): JSX.Element => {
     }
   };
 
+  const loader = (
+    <div className="loader">
+      <Spinner animation="grow" />
+      <h1>Loading</h1>
+    </div>
+  );
+
   const renderQuestions = () => {
-    if (loading) {
-      return (
-        <>
-          <Spinner animation="grow" />
-          <h1>Loading</h1>
-        </>
-      );
+    if (gameOver) {
     } else {
-      if (gameOver) {
-      } else {
-        let nextButton = null;
-        if (userAnswers.length === number + 1 && number === TOTAL_QUESTIONS - 1) {
-          nextButton = (
-            <Button size="lg" className="next">
-              <Link to="/">Start new game</Link>
-            </Button>
-          );
-        } else if (userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1) {
-          nextButton = (
-            <Button size="lg" className="next" onClick={nextQuestion}>
-              Next Question
-            </Button>
-          );
-        }
-        return (
-          <>
-            <QuestionCard
-              score={score}
-              questionNumber={number + 1}
-              totalQuestions={TOTAL_QUESTIONS}
-              question={questions[number].question}
-              answers={questions[number].answers}
-              userAnswer={userAnswers ? userAnswers[number] : undefined}
-              callback={checkAnswer}
-            />
-            <div className="footer">
-              {userAnswers[number] && (
-                <h3>{userAnswers[number].correct ? "CORRECT" : "INCORRECT"}</h3>
-              )}
-              {nextButton}
-            </div>
-          </>
+      let nextButton = null;
+      if (userAnswers.length === number + 1 && number === TOTAL_QUESTIONS - 1) {
+        nextButton = (
+          <Button size="lg" className="next">
+            <Link to="/">Start new game</Link>
+          </Button>
+        );
+      } else if (userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1) {
+        nextButton = (
+          <Button size="lg" className="next" onClick={nextQuestion}>
+            Next Question
+          </Button>
         );
       }
+      return (
+        <>
+          <QuestionCard
+            score={score}
+            questionNumber={number + 1}
+            totalQuestions={TOTAL_QUESTIONS}
+            question={questions[number].question}
+            answers={questions[number].answers}
+            userAnswer={userAnswers ? userAnswers[number] : undefined}
+            callback={checkAnswer}
+          />
+          <div className="footer">
+            {userAnswers[number] && (
+              <h3>{userAnswers[number].correct ? "CORRECT" : "INCORRECT"}</h3>
+            )}
+            {nextButton}
+          </div>
+        </>
+      );
     }
   };
 
   return (
-    <Container className="game-container" fluid>
-      {renderQuestions()}
+    <Container fluid className="game-container">
+      {loading ? loader : renderQuestions()}
     </Container>
   );
 };

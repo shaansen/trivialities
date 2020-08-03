@@ -6,11 +6,9 @@ const NavHeader = () => {
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">
-          <NavLink to="/">
-            <h1>TRIVIALITIES</h1>
-          </NavLink>
-        </Navbar.Brand>
+        <NavLink to="/">
+          <h1 className="header-text">TRIVIALITIES</h1>
+        </NavLink>
       </Navbar>
     </>
   );
